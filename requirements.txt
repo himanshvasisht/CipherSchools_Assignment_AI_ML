@@ -9,7 +9,7 @@ pydantic==2.5.3
 gitpython==3.1.41
 pylint==3.0.3
 bandit==1.7.5
-radon==6.1.1
+radon==6.0.1
 
 # Frontend & Visualization
 streamlit==1.32.2
