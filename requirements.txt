@@ -1,0 +1,21 @@
+# Backend & API
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+requests==2.31.0
+python-dotenv==1.0.0
+pydantic==2.5.3
+
+# Ingestion & Analysis
+gitpython==3.1.41
+pylint==3.0.3
+bandit==1.7.5
+radon==6.1.1
+
+# Frontend & Visualization
+streamlit==1.32.2
+plotly==5.18.0
+pandas==2.1.4
+
+# Production Server
+gunicorn==21.2.0
+aiohttp==3.9.1

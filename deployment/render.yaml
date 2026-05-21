@@ -1,0 +1,26 @@
+# Render Blueprint Configuration
+# Deploys the Streamlit Dashboard using the Dockerfile
+
+services:
+  - type: web
+    name: ai-code-review-agent
+    runtime: docker
+    plan: free
+    dockerFilePath: deployment/Dockerfile
+    
+    # Expose the correct port
+    envVars:
+      - key: PORT
+        value: 8501
+        
+      # Optional secrets/configs
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: openrouter
+      - key: OLLAMA_HOST
+        value: http://localhost:11434
