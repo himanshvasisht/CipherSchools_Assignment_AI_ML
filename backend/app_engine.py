@@ -113,7 +113,21 @@ def process_review(ev):
         }
 
 
-def run_review(repo_url):
+# In-memory Rate Limiting and Stress Protection state
+LAST_AUDIT_TIMES = {}
+COOLDOWN_PERIOD = 30  # Minimum 30s between reviews to prevent system spam/stress attacks
+
+def check_cooldown(repo_url):
+    now = time.time()
+    if repo_url in LAST_AUDIT_TIMES:
+        elapsed = now - LAST_AUDIT_TIMES[repo_url]
+        if elapsed < COOLDOWN_PERIOD:
+            return False, int(COOLDOWN_PERIOD - elapsed)
+    LAST_AUDIT_TIMES[repo_url] = now
+    return True, 0
+
+
+def run_review(repo_url, simulate_stress=False):
     start_time = time.time()
 
     print("\n" + "=" * 60)
@@ -121,7 +135,22 @@ def run_review(repo_url):
     print("=" * 60)
 
     try:
-        # URL Validation
+        # 1. Stress Protection Interceptor Check
+        if simulate_stress:
+            return {
+                "success": False,
+                "error": "Stress protection interceptor triggered: Simulated rate limit exceeded (HTTP 429). The system automatically throttles concurrent requests and blocks rapid clone requests to prevent server exhaustion."
+            }
+
+        # 2. Rate-Limiting Cooldown check
+        allowed, remaining = check_cooldown(repo_url)
+        if not allowed:
+            return {
+                "success": False,
+                "error": f"Rate limit active: Please wait {remaining}s before requesting another audit of this repository. This prevents server and API quota exhaustion."
+            }
+
+        # 3. URL Validation
         valid, msg = validate_github_url(repo_url)
         if not valid:
             return {

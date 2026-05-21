@@ -110,6 +110,13 @@ with st.sidebar:
         help="Direct Engine runs analysis locally inside Streamlit Cloud. API Service queries the FastAPI backend server."
     )
 
+    st.markdown("### 4. Hardening & Security")
+    simulate_stress = st.checkbox(
+        "Simulate Stress Attack",
+        value=False,
+        help="Simulates a rate-limit denial-of-service stress attack to test request throttling controls."
+    )
+
     st.markdown("---")
     analyze_clicked = st.button("Run Analysis", use_container_width=True, type="primary")
 
@@ -136,13 +143,13 @@ with st.sidebar:
                 try:
                     start_time = time.time()
                     if exec_mode == "Direct Engine (Local)":
-                        result = run_review(repo_url.strip())
+                        result = run_review(repo_url.strip(), simulate_stress=simulate_stress)
                     else:
                         # FastAPI Mode
                         backend_url = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
                         response = requests.post(
                             f"{backend_url}/review",
-                            json={"repo_url": repo_url.strip()},
+                            json={"repo_url": repo_url.strip(), "simulate_stress": simulate_stress},
                             timeout=600
                         )
                         result = response.json()

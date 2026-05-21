@@ -29,6 +29,7 @@ app.add_middleware(
 
 class RepoRequest(BaseModel):
     repo_url: str
+    simulate_stress: bool = False
 
 @app.get("/")
 def home():
@@ -37,7 +38,7 @@ def home():
 @app.post("/review")
 def review_repo(req: RepoRequest):
     try:
-        result = run_review(req.repo_url)
+        result = run_review(req.repo_url, simulate_stress=req.simulate_stress)
         if not result.get("success"):
             return JSONResponse(status_code=400, content=result)
         return result
