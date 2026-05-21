@@ -16,7 +16,7 @@ from pydantic import BaseModel
 
 from app_engine import run_review
 
-app = FastAPI(title="AI Code Reviewer")
+app = FastAPI(title="Repository Intelligence & Review Platform API")
 
 # CORS middleware for local frontend requests
 app.add_middleware(

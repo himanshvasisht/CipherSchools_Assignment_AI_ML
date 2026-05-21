@@ -3,7 +3,7 @@
 
 services:
   - type: web
-    name: ai-code-review-agent
+    name: repository-review-platform
     runtime: docker
     plan: free
     dockerFilePath: deployment/Dockerfile

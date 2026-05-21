@@ -12,11 +12,11 @@ def build_multi_agent_prompt(evidence):
     language = evidence.get("type", "code")
 
     return f"""
-You are acting as a panel of four specialized AI code review agents:
-1. **Quality Agent**: Focuses on readability, naming conventions, style, and code smells.
-2. **Security Agent**: Focuses on OWASP hazards, hardcoded secrets, injection, and security practices.
-3. **Architecture Agent**: Focuses on import coupling, modularity, and dependency issues.
-4. **Repair Agent**: Compiles findings and suggests a repaired/refactored version of the code.
+You are acting as a panel of four specialized repository auditors:
+1. **Code Quality Auditor**: Evaluates readability, coding standards compliance, naming conventions, and code smells.
+2. **Static Vulnerability Auditor**: Evaluates potential security hazards, injection vectors, and cryptographic issues.
+3. **Architectural Coupling Auditor**: Evaluates modularity boundaries, file centrality, and structural coupling metrics.
+4. **Refactoring & Patch Generation Engine**: Synthesizes the auditor findings to recommend optimal refactored structures.
 
 CONTEXT:
 File Path: {file_path}
@@ -28,7 +28,7 @@ Static Security: {security_short}
 Code to analyze:
 {code_short}
 
-Analyze the code from the perspective of each agent.
+Analyze the code from the perspective of each auditor.
 You MUST output ONLY a valid JSON object matching the following structure. Do not add markdown blocks or wrapping text:
 {{
     "quality_findings": "2-3 bulleted quality findings.",
@@ -45,7 +45,7 @@ You MUST output ONLY a valid JSON object matching the following structure. Do no
 
 def review_with_llm(evidence):
     """
-    Executes a single unified LLM call simulating the multi-agent panel.
+    Executes a single unified LLM call simulating the multi-auditor panel.
     Returns structured results.
     """
     # Fetch the active client (may reload from env if needed)
@@ -68,9 +68,9 @@ def review_with_llm(evidence):
         data = json.loads(cleaned)
         # Format the response in the way process_review expects:
         review_text = (
-            f"### Quality Agent findings:\n{data.get('quality_findings', 'None')}\n\n"
-            f"### Security Agent findings:\n{data.get('security_findings', 'None')}\n\n"
-            f"### Architecture Agent findings:\n{data.get('architecture_findings', 'None')}"
+            f"### Code Quality Auditor Findings:\n{data.get('quality_findings', 'None')}\n\n"
+            f"### Static Vulnerability Auditor Findings:\n{data.get('security_findings', 'None')}\n\n"
+            f"### Architectural Coupling Auditor Findings:\n{data.get('architecture_findings', 'None')}"
         )
         
         repair_text = (
@@ -90,7 +90,7 @@ def review_with_llm(evidence):
         print(f"Failed to parse multi-agent JSON: {e}. Raw: {response}")
         # Graceful fallback
         return {
-            "review": "AI review temporarily unavailable.",
+            "review": "Auditor analysis temporarily unavailable.",
             "repair": "Repair suggestions unavailable.",
             "repaired_code": "",
             "llm_confidence": 50,

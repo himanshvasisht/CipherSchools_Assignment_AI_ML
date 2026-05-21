@@ -43,7 +43,7 @@ def compute_hybrid_confidence(
     Calculates final confidence score using a hybrid formula:
     - 40% Static Analysis (Bandit, Radon, Pylint)
     - 25% Dependency Evidence (Centrality)
-    - 20% Multi-Agent Agreement
+    - 20% Multi-Auditor Agreement
     - 15% LLM Reasoning Confidence
     """
     # 1. Static Analysis Score (0-100)
@@ -53,8 +53,8 @@ def compute_hybrid_confidence(
     # Higher centrality -> higher dependency evidence (more files import/connect to it)
     dep_score = min(100, int(centrality_score * 10) + 50)
 
-    # 3. Agent Agreement (0-100)
-    # Passed in based on agent reviews
+    # 3. Auditor Agreement (0-100)
+    # Passed in based on auditor analysis
     agreement_score = max(0, min(100, agent_agreement))
 
     # 4. LLM reasoning (0-100)

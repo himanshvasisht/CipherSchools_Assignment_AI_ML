@@ -58,7 +58,7 @@ def process_review(ev):
                 llm_confidence = llm_response.get("llm_confidence", 80)
                 agent_agreement = llm_response.get("agent_agreement", 90)
             else:
-                llm_review = "AI review unavailable"
+                llm_review = "Auditor analysis unavailable"
                 repair = "Repair unavailable"
         else:
             llm_review = (

@@ -19,8 +19,8 @@ from backend.app_engine import run_review
 from visualization.graph_viz import create_centrality_chart, create_risk_heatmap
 
 st.set_page_config(
-    page_title="AI Code Review Agent",
-    page_icon="🤖",
+    page_title="Repository Intelligence & Review Platform",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -75,8 +75,8 @@ if "selected_idx" not in st.session_state:
 #  SIDEBAR
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.title("🤖 Review Agent")
-    st.subheader("Autonomous Repository Intelligence")
+    st.title("Repository Analytics")
+    st.subheader("Automated Source Code Auditor")
     st.markdown("---")
 
     st.markdown("### 1. Repository Configuration")
@@ -162,7 +162,7 @@ with st.sidebar:
 result = st.session_state.latest_result
 
 if not result:
-    st.info("🤖 Paste a GitHub repository URL in the sidebar and click 'Run Analysis' to begin.")
+    st.info("Paste a GitHub repository URL in the sidebar and click 'Run Analysis' to initiate the audit.")
     st.stop()
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -205,10 +205,10 @@ with col_right:
 
 st.markdown("---")
 
-# Epistemic Humility Filter (Creative Twist)
-st.subheader("🔍 Review Findings")
+# Audit Findings Panel
+st.subheader("Audited Repository Findings")
 filter_option = st.radio(
-    "Filter by Confidence Rating",
+    "Filter by Confidence Threshold",
     ["Show All", "Verification Required (Low Confidence < 40%)", "High / Medium Confidence (>= 40%)"],
     horizontal=True
 )
@@ -263,14 +263,14 @@ with right_panel:
             )
 
         tab_review, tab_compare, tab_security = st.tabs(
-            ["🧑‍💻 Agent Review", "🔧 Side-by-Side Repair", "🛡️ Static Security"]
+            ["Auditor Analysis", "Proposed Refactoring", "Vulnerability Scanner"]
         )
 
         with tab_review:
             st.markdown(selected_item.get("llm_review", "No reviews generated."))
             
         with tab_compare:
-            st.markdown("### 🔧 Proposed Repair Suggestions")
+            st.markdown("### Proposed Refactoring & Patches")
             # We display the explanation part (removing code snippet if already present to avoid duplication)
             full_repair = selected_item.get("repair_suggestions", "No repair suggestions available.")
             explanation = full_repair.split("```python")[0] if "```python" in full_repair else full_repair
@@ -279,10 +279,10 @@ with right_panel:
             st.markdown("---")
             col_orig, col_fix = st.columns(2)
             with col_orig:
-                st.markdown("🔍 **Original Code Chunk**")
+                st.markdown("**Original Code Segment**")
                 st.code(selected_item.get("code_preview", ""), language="python")
             with col_fix:
-                st.markdown("✨ **Proposed Repair**")
+                st.markdown("**Refactored Code**")
                 st.code(selected_item.get("repaired_code", ""), language="python")
             
         with tab_security:

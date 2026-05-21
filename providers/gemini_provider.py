@@ -5,7 +5,7 @@ from providers.base_provider import BaseProvider
 class GeminiProvider(BaseProvider):
     def __init__(self):
         self.api_key = os.getenv("GEMINI_API_KEY")
-        self.model = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        self.model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
         self.timeout = 60
 
     def generate(self, prompt, timeout_override=None):
