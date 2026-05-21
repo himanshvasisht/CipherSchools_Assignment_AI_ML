@@ -6,7 +6,7 @@ services:
     name: repository-review-platform
     runtime: docker
     plan: free
-    dockerFilePath: deployment/Dockerfile
+    dockerfilePath: deployment/Dockerfile
     envVars:
       - key: PORT
         value: "8501"
