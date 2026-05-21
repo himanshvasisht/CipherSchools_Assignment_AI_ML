@@ -1,5 +1,12 @@
 # An Empirical Framework for Multi-Auditor Static Analysis & Dependency Centrality Mapping in Source Code Repositories
 
+### 🌐 Live Application Link: [yourcodeone.streamlit.app](https://yourcodeone.streamlit.app/)
+
+### 🧪 Demo Repositories to Test:
+*   **Python:** `https://github.com/pallets/click` (Excellent for testing dependency mapping and complexity analysis)
+*   **JS/TS:** `https://github.com/expressjs/session` (Excellent for testing JavaScript regex-based parser)
+*   **Security:** `https://github.com/we45/Vulnerable-Flask-App` (Excellent for testing vulnerability scanning and side-by-side patch generation)
+
 ## Abstract
 Modern software engineering exhibits an exponential increase in repository scale, leading to significant challenges in manual code review, security auditing, and architectural maintenance. This paper presents a hybrid static-dynamic analysis platform that maps files into a dependency graph using Abstract Syntax Tree (AST) parsing, calculates structural risk via node centrality, and routes vulnerable segments to a Multi-Auditor Large Language Model (LLM) consensus engine. By combining deterministic local static analysis tools (Radon, Bandit, Pylint) with heuristic reasoning systems, the framework provides high-fidelity refactoring suggestions, reduces LLM token costs, and ensures robust validation.
 
